@@ -15,7 +15,7 @@
         maxZoom: 18,
       }).addTo(map);
 
-      fetch('https://github.com/ismailsakdo/petalingGrid/blob/main/case%20in%20grid%20overall.json')
+      fetch('https://raw.githubusercontent.com/ismailsakdo/petalingGrid/main/case%20in%20grid%20overall.json')
         .then(response => response.json())
         .then(data => {
           L.geoJSON(data, {
