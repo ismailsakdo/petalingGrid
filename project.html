@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-l8XBYW1eLLNN+HZlaRBJtJn8t+JYsYsSMZ3qbdnQx8XcWfScvJp93KOjrEXRvr0G0sWtYsTXP05q14rkeQ2X9g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-lfU5zdGy5i6U5e6U5g5ZMnFZiMlcX9WMPUgSYQd4q3TX4lQlI4+EMDwK3q7iSJJPltE1LzjKnmHTrp7t4Bohdw==" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="map" style="height: 500px;"></div>
+    <script>
+      var map = L.map('map').setView([51.505, -0.09], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+      }).addTo(map);
+
+      fetch('https://github.com/ismailsakdo/petalingGrid/blob/main/case%20in%20grid%20overall.json')
+        .then(response => response.json())
+        .then(data => {
+          L.geoJSON(data, {
+            style: function(feature) {
+              var caseValue = feature.properties.case;
+              if (caseValue === 'A') {
+                return { color: 'red' };
+              } else if (caseValue === 'B') {
+                return { color: 'blue' };
+              } else {
+                return { color: 'gray' };
+              }
+            },
+          }).addTo(map);
+        });
+    </script>
+  </body>
+</html>
